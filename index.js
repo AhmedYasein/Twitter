@@ -1,6 +1,6 @@
 import express from "express";
-import userRoutes from "./routes/userRoutes.js"
-import tweetRoutes from "./routes/tweetRoutes.js"
+import userRoutes from './src/routes/userRoutes.js'; // 
+import tweetRoutes from "./src/routes/tweetRoutes.js"
 const app = express();
 const PORT = 3000;
 
