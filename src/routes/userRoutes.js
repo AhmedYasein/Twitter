@@ -3,7 +3,8 @@ import { validationResult } from 'express-validator';
 import ResponseHandler from '../utils/ResponseHandler.js';
 import UserController from '../Controllers/userController.js'; 
 import userValidationRules from '../validators/userValidator.js';
-
+import loginValidationRules from '../validators/loginValidator.js';
+import { verifyToken } from '../Middlewares/authMiddleware.js'
 const router = express.Router();
 
 // Middleware to check validation results
@@ -20,8 +21,13 @@ const validate = (req, res, next) => {
   next();
 };
 
+router.post('/login', loginValidationRules, validate, UserController.login);
+
 // Create user with validation
 router.post('/', userValidationRules, validate, UserController.create);
+
+router.use(verifyToken);
+
 
 // List users (no validation needed)
 router.get('/', UserController.list);

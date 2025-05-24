@@ -9,9 +9,10 @@ class TweetModel {
   }
 
   // Find all tweets
-  async findAll() {
-    return await prisma.tweet.findMany();
+  async findAll(options = {}) {
+    return prisma.tweet.findMany(options);
   }
+
 
   // Find a tweet by ID
   async findById(id) {

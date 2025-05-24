@@ -14,6 +14,12 @@ class UserModel {
         return await prisma.user.findMany();
     }
 
+    async findByEmail(email) {
+        return await prisma.user.findUnique({
+            where: {email: email}
+        })
+    }
+
     async findById(id) {
 
          return await prisma.user.findUnique({

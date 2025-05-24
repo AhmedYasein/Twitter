@@ -18,12 +18,17 @@ class TweetController {
 
   static async list(req, res) {
     try {
-      const tweets = await tweetModel.findAll();
+      const tweets = await tweetModel.findAll({
+        include: {
+          author: true
+        }
+      });
       return ResponseHandler.success(res, 'Tweets fetched', tweets);
     } catch (error) {
       return ResponseHandler.error(res, error, 'Failed to fetch tweets');
     }
   }
+  
 
   static async getOne(req, res) {
     try {
