@@ -1,5 +1,5 @@
 import UserModel from "../Model/userModel.js";
-import ResponseHandler from "../src/utils/ResponseHandler.js";
+import ResponseHandler from "../utils/ResponseHandler.js";
 const userModel = new UserModel(); 
 
 class UserController {

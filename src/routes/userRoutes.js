@@ -1,8 +1,8 @@
 import express from 'express';
 import { validationResult } from 'express-validator';
 import ResponseHandler from '../utils/ResponseHandler.js';
-import UserController from '../../Controllers/userController.js'; 
-import userValidationRules from '../../validators/userValidator.js';
+import UserController from '../Controllers/userController.js'; 
+import userValidationRules from '../validators/userValidator.js';
 
 const router = express.Router();
 

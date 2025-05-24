@@ -1,6 +1,6 @@
 import express from 'express';
-import TweetController from '../../Controllers/TweerController.js';
-import tweetValidationRules from '../../validators/tweetValidator.js';
+import TweetController from '../Controllers/TweerController.js';
+import tweetValidationRules from '../validators/tweetValidator.js';
 import { validationResult } from 'express-validator';
 import ResponseHandler from '../utils/ResponseHandler.js';
 

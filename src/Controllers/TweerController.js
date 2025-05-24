@@ -1,5 +1,5 @@
 import TweetModel from '../Model/TweetModel.js';
-import ResponseHandler from '../src/utils/ResponseHandler.js';
+import ResponseHandler from '../utils/ResponseHandler.js';
 
 const tweetModel = new TweetModel();
 
