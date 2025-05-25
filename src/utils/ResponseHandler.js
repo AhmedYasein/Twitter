@@ -6,6 +6,10 @@ class ResponseHandler {
       data,
     };
 
+    if (res.locals.token) {
+      response.token = res.locals.token; 
+    }
+
     return res.status(statusCode).json(response);
   }
 

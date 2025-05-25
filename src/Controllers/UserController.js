@@ -1,9 +1,9 @@
 import UserModel from "../Model/userModel.js";
 import ResponseHandler from "../utils/ResponseHandler.js";
 import { generateToken } from "../utils/token.js";
-const userModel = new UserModel(); 
+import { addBlacklistToken } from "../utils/tokenBlackListed.js";
 
-
+const userModel = new UserModel()
 class UserController {
 
   static async login(req, res) {
@@ -23,6 +23,22 @@ class UserController {
     }
   }
 
+  static async logout(req, res) {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) {
+
+      return ResponseHandler.fail(res, error, 'No token found in headers', {}, 400);
+
+    }
+  
+    const token = authHeader.split(' ')[1];
+    addBlacklistToken(token);
+    res.locals.token = null;
+
+    return ResponseHandler.success(res, 'Logged out successfully', {}, 200);
+
+  }
+
 
   static async create(req, res) {
     try {
@@ -36,7 +52,7 @@ class UserController {
   
       // Generate token payload, typically user ID or any other needed info
       const payload = { id: user.id, userName: user.userName };
-      const token = generateToken(payload);
+      const token = "Bearer " + generateToken(payload);
   
       // Return user info + token
       return ResponseHandler.success(res, "User created", { user, token }, 201);

@@ -41,4 +41,7 @@ router.put('/:id', userValidationRules, validate, UserController.update);
 // Delete user (no validation needed for now)
 router.delete('/:id', UserController.remove);
 
+router.post('/logout', UserController.logout);
+
+
 export default router;
