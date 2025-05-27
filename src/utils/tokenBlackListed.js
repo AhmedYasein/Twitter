@@ -1,13 +1,37 @@
-const balklistedTokens = new Set();
+import { createClient } from 'redis';
 
-export function addBlacklistToken(token) {
+const redisClient = createClient();
 
-    balklistedTokens.add(token);
+redisClient.on('error', (err) => console.error('❌ Redis Client Error:', err));
 
-
+async function connectRedis() {
+  if (!redisClient.isOpen) {
+    await redisClient.connect();
+  }
 }
 
-export function isTokenBlacklisted(token) {
+// Optional: Eager connect at startup
+await connectRedis();
 
-    return balklistedTokens.has(token);
+/**
+ * Add a JWT token to the Redis blacklist
+ * @param {string} token - JWT token to blacklist
+ * @param {number} ttlSeconds - Time in seconds until the token expires
+ */
+export async function addBlacklistToken(token, ttlSeconds) {
+  await connectRedis();
+  await redisClient.set(`blacklist:${token}`, 'true', {
+    EX: ttlSeconds,
+  });
+}
+
+/**
+ * Check if a token is blacklisted
+ * @param {string} token - JWT token to check
+ * @returns {Promise<boolean>} - True if blacklisted
+ */
+export async function isTokenBlacklisted(token) {
+  await connectRedis();
+  const result = await redisClient.get(`blacklist:${token}`);
+  return result === 'true';
 }

@@ -9,10 +9,14 @@ class TweetController {
 
   static async create(req, res) {
     try {
-      const tweet = await tweetModel.create(req.body);
-      return ResponseHandler.success(res, 'Tweet created', tweet, 201);
+      const { content } = req.body;
+      const authorId = req.user.id;
+      
+      const tweet = await tweetModel.create({ content, authorId });
+      
+      return ResponseHandler.success(res, "Tweet created", tweet, 201);
     } catch (error) {
-      return ResponseHandler.error(res, error, 'Failed to create tweet');
+      return ResponseHandler.error(res, error, "Failed to create tweet");
     }
   }
 

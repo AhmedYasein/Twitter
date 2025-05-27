@@ -5,6 +5,7 @@ import UserController from '../Controllers/userController.js';
 import userValidationRules from '../validators/userValidator.js';
 import loginValidationRules from '../validators/loginValidator.js';
 import { verifyToken } from '../Middlewares/authMiddleware.js'
+import { authorizeUser } from '../Middlewares/authorizeUser.js';
 const router = express.Router();
 
 // Middleware to check validation results
@@ -32,7 +33,13 @@ router.use(verifyToken);
 // List users (no validation needed)
 router.get('/', UserController.list);
 
+// Logout
+router.post('/logout', UserController.logout);
+
+
 // Get one user (no validation on id here, but you can add if you want)
+
+router.use(authorizeUser)
 router.get('/:id', UserController.getOne);
 
 // Update user with validation
@@ -41,7 +48,6 @@ router.put('/:id', userValidationRules, validate, UserController.update);
 // Delete user (no validation needed for now)
 router.delete('/:id', UserController.remove);
 
-router.post('/logout', UserController.logout);
 
 
 export default router;

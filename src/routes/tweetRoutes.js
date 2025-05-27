@@ -3,7 +3,7 @@ import TweetController from '../Controllers/TweerController.js';
 import tweetValidationRules from '../validators/tweetValidator.js';
 import { validationResult } from 'express-validator';
 import ResponseHandler from '../utils/ResponseHandler.js';
-
+import { verifyToken } from '../Middlewares/authMiddleware.js';
 const router = express.Router();
 
 const validate = (req, res, next) => {
@@ -13,6 +13,8 @@ const validate = (req, res, next) => {
   }
   next();
 };
+
+router.use(verifyToken);
 
 // Create tweet with validation
 router.post('/', tweetValidationRules, validate, TweetController.create);

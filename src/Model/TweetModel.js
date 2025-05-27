@@ -4,9 +4,17 @@ const prisma = new PrismaClient();
 class TweetModel {
 
   // Create a new tweet
-  async create(data) {
-    return await prisma.tweet.create({ data });
+  async create({ content, authorId }) {
+    return await prisma.tweet.create({
+      data: {
+        content,
+        author: {
+          connect: { id: authorId },
+        },
+      },
+    });
   }
+  
 
   // Find all tweets
   async findAll(options = {}) {

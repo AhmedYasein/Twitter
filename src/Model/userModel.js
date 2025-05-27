@@ -20,6 +20,12 @@ class UserModel {
         })
     }
 
+
+    async findByUserName(userName) {
+        return await prisma.user.findUnique({
+            where: {userName: userName}
+        })
+    }
     async findById(id) {
 
          return await prisma.user.findUnique({

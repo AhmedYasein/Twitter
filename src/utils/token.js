@@ -17,3 +17,11 @@ export function verifyToken(token) {
     return null; // Invalid or expired token
   }
 }
+
+export function decodeToken(token) {
+    try {
+      return jwt.decode(token); // No verification here, just decode
+    } catch {
+      return null;
+    }
+  }
